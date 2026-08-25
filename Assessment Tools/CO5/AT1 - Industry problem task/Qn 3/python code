@@ -1,0 +1,69 @@
+from flask import Flask, request, Response
+import xml.etree.ElementTree as ET
+
+app = Flask(__name__)
+
+@app.route("/service", methods=["POST"])
+def soap_service():
+
+    try:
+        root = ET.fromstring(request.data)
+
+        body = root.find(".//{*}Body")
+
+        if body is None:
+            return soap_fault("SOAP Body is missing")
+
+        operation = list(body)[0]
+
+        if not operation.tag.endswith("getPatient"):
+            return soap_fault("Invalid operation")
+
+        patient_id = operation.find(".//patientId")
+
+        if patient_id is None:
+            return soap_fault("Patient ID is missing")
+
+        response = f"""
+        <soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+            <soap:Body>
+                <getPatientResponse>
+                    <patientId>{patient_id.text}</patientId>
+                    <name>John</name>
+                    <status>Success</status>
+                </getPatientResponse>
+            </soap:Body>
+
+        </soap:Envelope>
+        """
+
+        return Response(response, content_type="text/xml")
+
+    except ET.ParseError:
+        return soap_fault("Invalid XML format")
+
+
+def soap_fault(message):
+
+    response = f"""
+    <soap:Envelope
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+        <soap:Body>
+            <soap:Fault>
+                <faultcode>Client</faultcode>
+                <faultstring>{message}</faultstring>
+            </soap:Fault>
+        </soap:Body>
+
+    </soap:Envelope>
+    """
+
+    return Response(response,
+                    status=500,
+                    content_type="text/xml")
+
+
+app.run(debug=True)
