@@ -1,0 +1,10 @@
+<soap:Envelope
+xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+    <soap:Body>
+        <getPatient>
+            <patientId>P101</patientId>
+        </getPatient>
+    </soap:Body>
+
+</soap:Envelope>
