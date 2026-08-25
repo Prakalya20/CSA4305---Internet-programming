@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<definitions
+    name="DataService"
+    targetNamespace="http://example.com/data"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://example.com/data">
+
+    <types>
+        <xsd:schema targetNamespace="http://example.com/data">
+
+            <xsd:element name="getDataRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getDataResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </types>
+
+    <message name="GetDataRequest">
+        <part name="parameters"
+              element="tns:getDataRequest"/>
+    </message>
+
+    <message name="GetDataResponse">
+        <part name="parameters"
+              element="tns:getDataResponse"/>
+    </message>
+
+    <portType name="DataPortType">
+
+        <operation name="getData">
+            <input message="tns:GetDataRequest"/>
+            <output message="tns:GetDataResponse"/>
+        </operation>
+
+    </portType>
+
+    <binding name="DataBinding"
+             type="tns:DataPortType">
+
+        <soap:binding
+            style="document"
+            transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <operation name="getData">
+
+            <soap:operation
+                soapAction="getData"/>
+
+            <input>
+                <soap:body use="literal"/>
+            </input>
+
+            <output>
+                <soap:body use="literal"/>
+            </output>
+
+        </operation>
+
+    </binding>
+
+    <service name="DataService">
+
+        <port name="DataPort"
+              binding="tns:DataBinding">
+
+            <soap:address
+                location="http://localhost:5000/data"/>
+
+        </port>
+
+    </service>
+
+</definitions>
