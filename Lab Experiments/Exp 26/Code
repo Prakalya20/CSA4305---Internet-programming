@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traffic Squad — Penalty Collection &amp; Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#1c1f24;
+    --asphalt-light:#2a2e35;
+    --amber:#ffb100;
+    --amber-dim:#8a6300;
+    --red:#e43d30;
+    --green:#2f9e5b;
+    --lane:#f5f3ee;
+    --card:#ffffff;
+    --steel:#5b6270;
+    --line:#e2ddd2;
+    --ink:#1c1f24;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--lane);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+  ::selection{background:var(--amber);color:var(--asphalt);}
+
+  /* ---------- Road-marking divider ---------- */
+  .road-strip{
+    height:8px;
+    background:repeating-linear-gradient(90deg,var(--amber) 0 26px, transparent 26px 44px);
+    opacity:.9;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--asphalt);
+    color:#fff;
+    padding:18px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand .badge{
+    width:42px;height:42px;border-radius:50%;
+    background:var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Oswald',sans-serif;font-weight:700;color:var(--asphalt);
+    font-size:18px;
+    box-shadow:0 0 0 3px var(--asphalt-light) inset;
+  }
+  .brand h1{
+    font-family:'Oswald',sans-serif;
+    font-size:22px;
+    letter-spacing:1px;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .brand p{margin:0;font-size:11px;color:#b7bdc9;letter-spacing:.5px;text-transform:uppercase;}
+
+  nav.portals{display:flex;gap:8px;}
+  nav.portals button{
+    font-family:'Oswald',sans-serif;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    background:var(--asphalt-light);
+    color:#cfd3da;
+    border:1px solid #3a3f47;
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:13px;
+    transition:.15s;
+  }
+  nav.portals button:hover{background:#343941;}
+  nav.portals button.active{
+    background:var(--amber);
+    color:var(--asphalt);
+    border-color:var(--amber);
+  }
+
+  main{max-width:1180px;margin:0 auto;padding:30px 24px 80px;}
+
+  .hero{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:24px;flex-wrap:wrap;gap:16px;
+  }
+  .hero h2{
+    font-family:'Oswald',sans-serif;
+    font-size:30px;text-transform:uppercase;letter-spacing:.5px;
+    margin:0 0 4px;
+  }
+  .hero p{margin:0;color:var(--steel);font-size:14px;max-width:560px;}
+  .eyebrow{
+    font-family:'Roboto Mono',monospace;font-size:11px;color:var(--red);
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+    margin:0 0 6px;
+  }
+
+  /* ---------- sub tabs ---------- */
+  .subtabs{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap;border-bottom:2px solid var(--line);}
+  .subtabs button{
+    background:none;border:none;
+    padding:10px 16px;font-size:13.5px;font-weight:600;
+    color:var(--steel);cursor:pointer;position:relative;top:2px;
+    font-family:'Inter',sans-serif;
+  }
+  .subtabs button.active{
+    color:var(--ink);
+    border-bottom:3px solid var(--amber);
+  }
+
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px;
+    margin-bottom:20px;
+  }
+  .card h3{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.5px;font-size:16px;margin:0 0 16px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+
+  label{display:block;font-size:12px;font-weight:600;color:var(--steel);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+  input, select, textarea{
+    width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:6px;
+    font-size:14px;font-family:'Inter',sans-serif;margin-bottom:14px;background:#fff;
+  }
+  input:focus, select:focus, textarea:focus{outline:2px solid var(--amber);border-color:var(--amber);}
+
+  .btn{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.5px;
+    background:var(--ink);color:#fff;border:none;padding:11px 22px;border-radius:6px;
+    cursor:pointer;font-size:13.5px;transition:.15s;
+  }
+  .btn:hover{background:#000;}
+  .btn.amber{background:var(--amber);color:var(--asphalt);}
+  .btn.amber:hover{background:#e6a000;}
+  .btn.red{background:var(--red);color:#fff;}
+  .btn.outline{background:none;border:1.5px solid var(--ink);color:var(--ink);}
+  .btn.small{padding:6px 12px;font-size:11.5px;}
+
+  .msg{padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:14px;font-weight:600;}
+  .msg.ok{background:#e7f6ed;color:var(--green);}
+  .msg.err{background:#fdeceb;color:var(--red);}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th{
+    text-align:left;font-family:'Roboto Mono',monospace;font-size:11px;
+    text-transform:uppercase;letter-spacing:.5px;color:var(--steel);
+    border-bottom:2px solid var(--line);padding:8px 10px;
+  }
+  td{padding:10px;border-bottom:1px solid var(--line);}
+  tr:last-child td{border-bottom:none;}
+  .tag{
+    padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.3px;
+  }
+  .tag.unpaid{background:#fdeceb;color:var(--red);}
+  .tag.paid{background:#e7f6ed;color:var(--green);}
+  .tag.open{background:#fff3d6;color:var(--amber-dim);}
+  .tag.closed{background:#e9ecef;color:var(--steel);}
+
+  .empty{color:var(--steel);font-size:13.5px;font-style:italic;padding:20px 0;}
+
+  /* Challan / FIR ticket stub - signature element */
+  .ticket{
+    position:relative;
+    background:var(--card);
+    border:1.5px dashed #c9c2b0;
+    border-radius:4px;
+    padding:20px 22px;
+    margin-bottom:16px;
+    display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;
+    background-image: radial-gradient(circle at 0 50%, var(--lane) 9px, transparent 10px),
+                       radial-gradient(circle at 100% 50%, var(--lane) 9px, transparent 10px);
+    background-position:left center, right center;
+    background-repeat:no-repeat;
+  }
+  .ticket .tnum{
+    font-family:'Roboto Mono',monospace;font-weight:700;font-size:13px;color:var(--red);
+    letter-spacing:.5px;
+  }
+  .ticket h4{margin:4px 0 6px;font-family:'Oswald',sans-serif;font-size:17px;text-transform:uppercase;}
+  .ticket .meta{font-size:12.5px;color:var(--steel);line-height:1.7;}
+  .ticket .fineamt{
+    font-family:'Oswald',sans-serif;font-size:26px;color:var(--ink);white-space:nowrap;
+  }
+  .ticket .fineamt small{display:block;font-size:10.5px;color:var(--steel);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.5px;}
+  .ticket img.proof{width:90px;height:70px;object-fit:cover;border-radius:6px;border:1px solid var(--line);}
+
+  .stat-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .stat{
+    flex:1;min-width:150px;background:var(--asphalt);color:#fff;border-radius:10px;padding:18px 20px;
+  }
+  .stat .num{font-family:'Oswald',sans-serif;font-size:30px;color:var(--amber);}
+  .stat .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#c3c8d1;}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .bar-row .lbl{width:130px;font-size:12.5px;color:var(--steel);flex-shrink:0;}
+  .bar-track{flex:1;background:#eee6d3;border-radius:5px;height:16px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--red));}
+  .bar-row .val{width:50px;text-align:right;font-family:'Roboto Mono',monospace;font-size:12px;}
+
+  .update-item{border-left:3px solid var(--amber);padding:8px 14px;margin-bottom:10px;background:#fffaf0;border-radius:0 6px 6px 0;}
+  .update-item .t{font-size:11px;color:var(--steel);font-family:'Roboto Mono',monospace;}
+
+  .lock-note{
+    background:#fff3d6;color:#7a5b00;padding:14px 16px;border-radius:8px;font-size:13px;margin-bottom:18px;
+  }
+
+  footer{text-align:center;padding:24px;color:var(--steel);font-size:12px;}
+
+  .split{display:flex;gap:24px;flex-wrap:wrap;}
+  .split > div{flex:1;min-width:280px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="badge">🚦</div>
+    <div>
+      <h1>Traffic Squad</h1>
+      <p>Penalty Collection &amp; Management System</p>
+    </div>
+  </div>
+  <nav class="portals">
+    <button data-portal="user" class="active">User</button>
+    <button data-portal="police">Police</button>
+    <button data-portal="admin">Admin</button>
+  </nav>
+</header>
+<div class="road-strip"></div>
+
+<main>
+
+  <!-- ============ USER PORTAL ============ -->
+  <section id="portal-user" class="portal">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Citizen Portal</p>
+        <h2>Check your challans, in your name</h2>
+        <p>Register your vehicle, log in, and view every case filed against you — with the officer's proof photo attached.</p>
+      </div>
+    </div>
+
+    <div class="subtabs">
+      <button data-sub="u-register" class="active">Register</button>
+      <button data-sub="u-login">Login</button>
+      <button data-sub="u-challan">View Challan</button>
+      <button data-sub="u-case">View Case Filed</button>
+    </div>
+
+    <div id="u-register" class="panel active">
+      <div class="card" style="max-width:480px">
+        <h3>Create your account</h3>
+        <div id="u-register-msg"></div>
+        <label>Full Name</label><input id="ur-name" placeholder="e.g. Karthik Raman">
+        <label>Email</label><input id="ur-email" type="email" placeholder="you@example.com">
+        <label>Password</label><input id="ur-pass" type="password" placeholder="Minimum 6 characters">
+        <label>Vehicle Number</label><input id="ur-vehicle" placeholder="e.g. TN 22 AB 4521">
+        <button class="btn amber" onclick="registerUser()">Register</button>
+      </div>
+    </div>
+
+    <div id="u-login" class="panel">
+      <div class="card" style="max-width:480px">
+        <h3>Login to your account</h3>
+        <div id="u-login-msg"></div>
+        <label>Email</label><input id="ul-email" type="email" placeholder="you@example.com">
+        <label>Password</label><input id="ul-pass" type="password" placeholder="Password">
+        <button class="btn amber" onclick="loginUser()">Login</button>
+        <p style="font-size:12px;color:var(--steel);margin-top:12px;">Demo account: <b>demo@user.com</b> / <b>demo123</b> (vehicle TN 22 AB 4521)</p>
+      </div>
+    </div>
+
+    <div id="u-challan" class="panel">
+      <div id="u-challan-body"></div>
+    </div>
+
+    <div id="u-case" class="panel">
+      <div id="u-case-body"></div>
+    </div>
+  </section>
+
+  <!-- ============ POLICE PORTAL ============ -->
+  <section id="portal-police" class="portal" style="display:none">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Enforcement Portal</p>
+        <h2>File it on the spot, with proof</h2>
+        <p>Log a violation, attach a photo, and it reaches the owner instantly — no paperwork lost, no one talked out of a fine.</p>
+      </div>
+    </div>
+
+    <div class="subtabs">
+      <button data-sub="p-login" class="active">Login</button>
+      <button data-sub="p-rules">Rules</button>
+      <button data-sub="p-create">Create Case</button>
+      <button data-sub="p-manage">Manage</button>
+    </div>
+
+    <div id="p-login" class="panel active">
+      <div class="card" style="max-width:480px">
+        <h3>Officer Login</h3>
+        <div id="p-login-msg"></div>
+        <label>Badge / Username</label><input id="pl-user" placeholder="e.g. TN-CONST-104">
+        <label>Password</label><input id="pl-pass" type="password" placeholder="Password">
+        <button class="btn amber" onclick="loginPolice()">Login</button>
+        <p style="font-size:12px;color:var(--steel);margin-top:12px;">Demo account: <b>TN-CONST-104</b> / <b>badge123</b></p>
+      </div>
+    </div>
+
+    <div id="p-rules" class="panel">
+      <div class="card">
+        <h3>Motor Vehicle Rules &amp; Fines</h3>
+        <table>
+          <tr><th>Code</th><th>Violation</th><th>Fine (₹)</th></tr>
+          <tr><td>MV-129</td><td>Riding without helmet</td><td>500</td></tr>
+          <tr><td>MV-130</td><td>Driving without seatbelt</td><td>1,000</td></tr>
+          <tr><td>MV-177</td><td>General violation of provisions</td><td>500</td></tr>
+          <tr><td>MV-183</td><td>Over-speeding</td><td>1,000 – 2,000</td></tr>
+          <tr><td>MV-184</td><td>Dangerous / rash driving</td><td>1,000 – 5,000</td></tr>
+          <tr><td>MV-185</td><td>Driving under influence (drunk)</td><td>10,000</td></tr>
+          <tr><td>MV-194</td><td>Overloading of vehicle</td><td>20,000</td></tr>
+          <tr><td>MV-196</td><td>Driving without valid insurance</td><td>2,000</td></tr>
+          <tr><td>MV-206</td><td>Signal / red-light jumping</td><td>1,000</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="p-create" class="panel">
+      <div id="p-create-body"></div>
+    </div>
+
+    <div id="p-manage" class="panel">
+      <div id="p-manage-body"></div>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN PORTAL ============ -->
+  <section id="portal-admin" class="portal" style="display:none">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Control Room</p>
+        <h2>Oversee the whole squad</h2>
+        <p>Manage officer logins and track how enforcement is trending, station-wide, day by day.</p>
+      </div>
+    </div>
+
+    <div class="subtabs">
+      <button data-sub="a-manage" class="active">Manage Police Login</button>
+      <button data-sub="a-report">View Daily Report</button>
+    </div>
+
+    <div id="a-manage" class="panel active">
+      <div id="a-manage-body"></div>
+    </div>
+
+    <div id="a-report" class="panel">
+      <div id="a-report-body"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Traffic Squad — Penalty Collection &amp; Management · Demo build, all data is in-memory for this session</footer>
+
+<script>
+/* ================= IN-MEMORY DATABASE (demo only, resets on reload) ================= */
+const db = {
+  users: [
+    {name:"Demo Citizen", email:"demo@user.com", pass:"demo123", vehicle:"TN 22 AB 4521"}
+  ],
+  police: [
+    {badge:"TN-CONST-104", pass:"badge123", name:"Const. R. Suresh", station:"Avadi Traffic PS"},
+    {badge:"TN-CONST-211", pass:"badge123", name:"Const. M. Priya", station:"Ambattur Traffic PS"}
+  ],
+  cases: [
+    {
+      id:"FIR-2026-0091", vehicle:"TN 22 AB 4521", owner:"Demo Citizen",
+      violation:"Riding without helmet", code:"MV-129", fine:500,
+      officer:"Const. R. Suresh", date:"2026-08-24", status:"unpaid",
+      photo:null
+    },
+    {
+      id:"FIR-2026-0104", vehicle:"TN 09 XZ 7712", owner:"Vehicle Owner (unregistered)",
+      violation:"Signal jumping", code:"MV-206", fine:1000,
+      officer:"Const. M. Priya", date:"2026-08-27", status:"paid",
+      photo:null
+    }
+  ],
+  updates: [
+    {time:"08:40 AM", text:"Heavy congestion reported near Poonamallee flyover — diversion in effect."},
+    {time:"07:55 AM", text:"Special drive against triple-riding launched across 12 checkposts today."}
+  ]
+};
+let seq = 105;
+
+let currentUser = null;
+let currentPolice = null;
+
+/* ================= NAV ================= */
+document.querySelectorAll('nav.portals button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.portals button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portal').forEach(p=>p.style.display='none');
+    document.getElementById('portal-'+btn.dataset.portal).style.display='block';
+  });
+});
+
+document.querySelectorAll('.subtabs').forEach(group=>{
+  group.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const parentSection = group.closest('.portal');
+      parentSection.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById(btn.dataset.sub).classList.add('active');
+      // refresh dynamic panels on open
+      if(btn.dataset.sub==='u-challan') renderUserChallans();
+      if(btn.dataset.sub==='u-case') renderUserCases();
+      if(btn.dataset.sub==='p-create') renderPoliceCreate();
+      if(btn.dataset.sub==='p-manage') renderPoliceManage();
+      if(btn.dataset.sub==='a-manage') renderAdminManage();
+      if(btn.dataset.sub==='a-report') renderAdminReport();
+    });
+  });
+});
+
+function showMsg(elId, text, ok){
+  document.getElementById(elId).innerHTML =
+    `<div class="msg ${ok?'ok':'err'}">${text}</div>`;
+}
+
+/* ================= USER ================= */
+function registerUser(){
+  const name = document.getElementById('ur-name').value.trim();
+  const email = document.getElementById('ur-email').value.trim().toLowerCase();
+  const pass = document.getElementById('ur-pass').value;
+  const vehicle = document.getElementById('ur-vehicle').value.trim().toUpperCase();
+  if(!name||!email||!pass||!vehicle){ showMsg('u-register-msg','Please fill in every field.', false); return; }
+  if(pass.length<6){ showMsg('u-register-msg','Password must be at least 6 characters.', false); return; }
+  if(db.users.some(u=>u.email===email)){ showMsg('u-register-msg','An account with this email already exists.', false); return; }
+  db.users.push({name,email,pass,vehicle});
+  showMsg('u-register-msg', `Account created for ${name}. You can log in now.`, true);
+  document.getElementById('ur-name').value='';
+  document.getElementById('ur-email').value='';
+  document.getElementById('ur-pass').value='';
+  document.getElementById('ur-vehicle').value='';
+}
+
+function loginUser(){
+  const email = document.getElementById('ul-email').value.trim().toLowerCase();
+  const pass = document.getElementById('ul-pass').value;
+  const found = db.users.find(u=>u.email===email && u.pass===pass);
+  if(!found){ showMsg('u-login-msg','Incorrect email or password.', false); return; }
+  currentUser = found;
+  showMsg('u-login-msg', `Welcome back, ${found.name}. Open "View Challan" or "View Case Filed" from the tabs above.`, true);
+}
+
+function renderUserChallans(){
+  const el = document.getElementById('u-challan-body');
+  if(!currentUser){
+    el.innerHTML = `<div class="lock-note">Please log in first (see the <b>Login</b> tab) to view challans issued against your vehicle.</div>`;
+    return;
+  }
+  const mine = db.cases.filter(c=>c.vehicle===currentUser.vehicle);
+  let html = `<div class="card"><h3>Challans for ${currentUser.vehicle}</h3>`;
+  if(mine.length===0){
+    html += `<p class="empty">No challans found against your vehicle. Drive safe!</p>`;
+  } else {
+    mine.forEach(c=>{
+      html += `
+        <div class="ticket">
+          <div>
+            <div class="tnum">CHALLAN #${c.id}</div>
+            <h4>${c.violation}</h4>
+            <div class="meta">
+              Vehicle: <b>${c.vehicle}</b> · Owner: ${c.owner}<br>
+              Rule: ${c.code} · Issued by ${c.officer} on ${c.date}
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="fineamt">₹${c.fine}<small>Fine amount</small></div>
+            <span class="tag ${c.status}">${c.status}</span>
+          </div>
+        </div>`;
+    });
+  }
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+function renderUserCases(){
+  const el = document.getElementById('u-case-body');
+  if(!currentUser){
+    el.innerHTML = `<div class="lock-note">Please log in first (see the <b>Login</b> tab) to view FIR cases filed against your vehicle.</div>`;
+    return;
+  }
+  const mine = db.cases.filter(c=>c.vehicle===currentUser.vehicle);
+  let html = `<div class="card"><h3>FIR Cases — ${currentUser.name}</h3><table><tr><th>FIR No.</th><th>Vehicle</th><th>Violation</th><th>Officer</th><th>Date</th><th>Proof</th><th>Status</th></tr>`;
+  if(mine.length===0){
+    html += `</table><p class="empty">No FIR has been filed against you.</p>`;
+  } else {
+    mine.forEach(c=>{
+      html += `<tr>
+        <td class="tnum" style="font-family:'Roboto Mono',monospace">${c.id}</td>
+        <td>${c.vehicle}</td>
+        <td>${c.violation}</td>
+        <td>${c.officer}</td>
+        <td>${c.date}</td>
+        <td>${c.photo ? `<img class="proof" src="${c.photo}">` : '<span class="empty">no photo</span>'}</td>
+        <td><span class="tag ${c.status}">${c.status}</span></td>
+      </tr>`;
+    });
+    html += `</table>`;
+  }
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+/* ================= POLICE ================= */
+function loginPolice(){
+  const badge = document.getElementById('pl-user').value.trim();
+  const pass = document.getElementById('pl-pass').value;
+  const found = db.police.find(p=>p.badge===badge && p.pass===pass);
+  if(!found){ showMsg('p-login-msg','Invalid badge ID or password.', false); return; }
+  currentPolice = found;
+  showMsg('p-login-msg', `Logged in as ${found.name} (${found.station}). Open "Create Case" or "Manage".`, true);
+}
+
+function renderPoliceCreate(){
+  const el = document.getElementById('p-create-body');
+  if(!currentPolice){
+    el.innerHTML = `<div class="lock-note">Please log in first (see the <b>Login</b> tab) before filing a case.</div>`;
+    return;
+  }
+  el.innerHTML = `
+    <div class="card" style="max-width:560px">
+      <h3>File a New Case</h3>
+      <div id="p-create-msg"></div>
+      <label>Vehicle Number</label><input id="pc-vehicle" placeholder="e.g. TN 09 XZ 7712">
+      <label>Vehicle Owner Name</label><input id="pc-owner" placeholder="e.g. Suresh Kumar">
+      <label>Violation</label>
+      <select id="pc-violation">
+        <option value="Riding without helmet|MV-129|500">MV-129 — Riding without helmet (₹500)</option>
+        <option value="Driving without seatbelt|MV-130|1000">MV-130 — Driving without seatbelt (₹1,000)</option>
+        <option value="Over-speeding|MV-183|1500">MV-183 — Over-speeding (₹1,500)</option>
+        <option value="Dangerous driving|MV-184|3000">MV-184 — Dangerous driving (₹3,000)</option>
+        <option value="Drunk driving|MV-185|10000">MV-185 — Drunk driving (₹10,000)</option>
+        <option value="Signal jumping|MV-206|1000">MV-206 — Signal jumping (₹1,000)</option>
+      </select>
+      <label>Upload Proof Photo</label>
+      <input id="pc-photo" type="file" accept="image/*">
+      <div id="pc-preview" style="margin-bottom:14px;"></div>
+      <button class="btn amber" onclick="createCase()">Create Case &amp; File FIR</button>
+    </div>`;
+  document.getElementById('pc-photo').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    const prev = document.getElementById('pc-preview');
+    if(!file){ prev.innerHTML=''; return; }
+    const reader = new FileReader();
+    reader.onload = ev => { prev.innerHTML = `<img class="proof" style="width:140px;height:110px" src="${ev.target.result}">`; };
+    reader.readAsDataURL(file);
+  });
+}
+
+function createCase(){
+  const vehicle = document.getElementById('pc-vehicle').value.trim().toUpperCase();
+  const owner = document.getElementById('pc-owner').value.trim();
+  const [violation, code, fine] = document.getElementById('pc-violation').value.split('|');
+  const photoImg = document.querySelector('#pc-preview img');
+  if(!vehicle || !owner){ showMsg('p-create-msg','Vehicle number and owner name are required.', false); return; }
+  const id = `FIR-2026-0${seq++}`;
+  db.cases.unshift({
+    id, vehicle, owner, violation, code, fine: Number(fine),
+    officer: currentPolice.name, date: new Date().toISOString().slice(0,10),
+    status:"unpaid", photo: photoImg ? photoImg.src : null
+  });
+  db.updates.unshift({time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}), text:`New FIR ${id} filed for ${vehicle} — ${violation}.`});
+  showMsg('p-create-msg', `Case ${id} filed successfully. The owner will see it under "View Case Filed".`, true);
+  document.getElementById('pc-vehicle').value='';
+  document.getElementById('pc-owner').value='';
+  document.getElementById('pc-preview').innerHTML='';
+}
+
+function renderPoliceManage(){
+  const el = document.getElementById('p-manage-body');
+  if(!currentPolice){
+    el.innerHTML = `<div class="lock-note">Please log in first (see the <b>Login</b> tab) to access Manage.</div>`;
+    return;
+  }
+  let updatesHtml = db.updates.map(u=>`<div class="update-item"><div class="t">${u.time}</div>${u.text}</div>`).join('');
+  el.innerHTML = `
+    <div class="split">
+      <div>
+        <div class="card">
+          <h3>Live Traffic Information — New Updates</h3>
+          <div id="p-updates-list">${updatesHtml}</div>
+          <div style="margin-top:14px;display:flex;gap:8px;">
+            <input id="pm-update" placeholder="Post a live update for other officers..." style="margin-bottom:0;">
+            <button class="btn small amber" onclick="postUpdate()">Post</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Google Maps — Live Traffic</h3>
+          <p style="font-size:13px;color:var(--steel);margin-bottom:16px;">Open the live traffic layer for your patrol area to plan checkposts and divert congestion.</p>
+          <a href="https://www.google.com/maps/d/viewer?mid=&ll=13.1147,80.1000&z=12&layer=traffic" target="_blank" rel="noopener">
+            <button class="btn outline">Open Google Maps Traffic ↗</button>
+          </a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function postUpdate(){
+  const val = document.getElementById('pm-update').value.trim();
+  if(!val) return;
+  db.updates.unshift({time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}), text: val});
+  renderPoliceManage();
+}
+
+/* ================= ADMIN ================= */
+function renderAdminManage(){
+  const el = document.getElementById('a-manage-body');
+  let rows = db.police.map((p,i)=>`
+    <tr>
+      <td>${p.badge}</td><td>${p.name}</td><td>${p.station}</td>
+      <td><button class="btn small red" onclick="removePolice(${i})">Remove</button></td>
+    </tr>`).join('');
+  el.innerHTML = `
+    <div class="split">
+      <div>
+        <div class="card">
+          <h3>Registered Officer Logins</h3>
+          <table><tr><th>Badge ID</th><th>Name</th><th>Station</th><th></th></tr>${rows}</table>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Add New Officer Login</h3>
+          <div id="a-add-msg"></div>
+          <label>Badge ID</label><input id="aa-badge" placeholder="e.g. TN-CONST-318">
+          <label>Full Name</label><input id="aa-name" placeholder="e.g. Const. A. Bala">
+          <label>Station</label><input id="aa-station" placeholder="e.g. Avadi Traffic PS">
+          <label>Temporary Password</label><input id="aa-pass" placeholder="e.g. badge123">
+          <button class="btn amber" onclick="addPolice()">Add Officer</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function addPolice(){
+  const badge = document.getElementById('aa-badge').value.trim();
+  const name = document.getElementById('aa-name').value.trim();
+  const station = document.getElementById('aa-station').value.trim();
+  const pass = document.getElementById('aa-pass').value.trim();
+  if(!badge||!name||!station||!pass){ showMsg('a-add-msg','Please fill in every field.', false); return; }
+  if(db.police.some(p=>p.badge===badge)){ showMsg('a-add-msg','This badge ID is already registered.', false); return; }
+  db.police.push({badge,name,station,pass});
+  showMsg('a-add-msg', `Officer ${name} added with badge ${badge}.`, true);
+  renderAdminManage();
+}
+
+function removePolice(i){
+  db.police.splice(i,1);
+  renderAdminManage();
+}
+
+function renderAdminReport(){
+  const el = document.getElementById('a-report-body');
+  const total = db.cases.length;
+  const totalFine = db.cases.reduce((s,c)=>s+c.fine,0);
+  const paid = db.cases.filter(c=>c.status==='paid').reduce((s,c)=>s+c.fine,0);
+  const unpaid = totalFine - paid;
+
+  const byViolation = {};
+  db.cases.forEach(c=>{ byViolation[c.violation] = (byViolation[c.violation]||0) + 1; });
+  const maxCount = Math.max(1,...Object.values(byViolation));
+
+  let bars = Object.entries(byViolation).map(([v,n])=>`
+    <div class="bar-row">
+      <div class="lbl">${v}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/maxCount)*100}%"></div></div>
+      <div class="val">${n}</div>
+    </div>`).join('');
+
+  let rows = db.cases.map(c=>`
+    <tr>
+      <td style="font-family:'Roboto Mono',monospace">${c.id}</td>
+      <td>${c.vehicle}</td><td>${c.violation}</td><td>${c.officer}</td>
+      <td>₹${c.fine}</td><td><span class="tag ${c.status}">${c.status}</span></td>
+    </tr>`).join('');
+
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="num">${total}</div><div class="lbl">Cases Filed Today</div></div>
+      <div class="stat"><div class="num">₹${totalFine.toLocaleString()}</div><div class="lbl">Total Fine Value</div></div>
+      <div class="stat"><div class="num">₹${paid.toLocaleString()}</div><div class="lbl">Collected</div></div>
+      <div class="stat"><div class="num">₹${unpaid.toLocaleString()}</div><div class="lbl">Pending</div></div>
+    </div>
+    <div class="split">
+      <div>
+        <div class="card">
+          <h3>Violations Breakdown</h3>
+          ${bars}
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>All Cases</h3>
+          <table><tr><th>FIR No.</th><th>Vehicle</th><th>Violation</th><th>Officer</th><th>Fine</th><th>Status</th></tr>${rows}</table>
+        </div>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
