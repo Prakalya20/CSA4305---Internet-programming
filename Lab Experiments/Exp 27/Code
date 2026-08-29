@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartBus Pass Management System</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f7fb;color:#263238}header{background:linear-gradient(135deg,#1864ab,#1971c2);color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}.logo{font-size:26px;font-weight:bold}nav button{background:none;border:0;color:white;margin-left:18px;font-weight:bold;cursor:pointer}
+.hero{padding:50px 7%;background:linear-gradient(120deg,#e7f5ff,#dbe4ff)}.hero h1{font-size:40px;margin-bottom:12px}.hero p{font-size:18px;max-width:780px;margin-bottom:24px}
+.btn,.tabs button{border:0;background:#1971c2;color:white;padding:10px 16px;border-radius:7px;cursor:pointer;font-weight:bold}.container{padding:35px 7%}.title{text-align:center;margin-bottom:25px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card,.panel{background:white;padding:21px;border-radius:12px;box-shadow:0 3px 14px #0001}.card .icon{font-size:34px}.card h3{color:#1864ab;margin:10px 0}.tabs{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}.tabs button{background:#1864ab}input,select{width:100%;padding:11px;margin:7px 0 13px;border:1px solid #ced4da;border-radius:7px}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{padding:11px;border-bottom:1px solid #dee2e6;text-align:left}th{background:#e7f5ff}.ok{color:#2b8a3e;font-weight:bold}.qr{width:145px;height:145px;margin:15px auto;background:repeating-conic-gradient(#111 0 25%,#fff 0 50%) 0/20px 20px;border:12px solid white;box-shadow:0 0 0 1px #bbb}.map{height:150px;background:#d3f9d8;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-top:15px;font-size:20px;color:#2b8a3e}footer{text-align:center;background:#212529;color:white;padding:24px;margin-top:35px}.hidden{display:none}@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}header{flex-direction:column;gap:15px}}@media(max-width:500px){.cards{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header><div class="logo">🚌 SmartBus Pass</div><nav>
+<button onclick="show('home')">Home</button><button onclick="show('user')">User</button><button onclick="show('admin')">Admin</button><button onclick="show('conductor')">Conductor</button>
+</nav></header>
+
+<section id="home"><div class="hero"><h1>Smart Bus Pass Management System</h1><p>Apply, renew and manage student and route bus passes, buy eTickets, use eWallet and verify passes through QR codes.</p><button class="btn" onclick="show('user')">User Dashboard</button></div>
+<div class="container"><h2 class="title">System Features</h2><div class="cards">
+<div class="card"><div class="icon">🎫</div><h3>Bus Pass</h3><p>Apply for new student and route passes.</p></div>
+<div class="card"><div class="icon">🔄</div><h3>Renewal</h3><p>Renew monthly according to your requirement.</p></div>
+<div class="card"><div class="icon">📱</div><h3>QR Verification</h3><p>Generate and verify secure bus pass QR codes.</p></div>
+<div class="card"><div class="icon">📍</div><h3>Bus Tracking</h3><p>Update bus location and estimate arrival time.</p></div>
+</div></div></section>
+
+<section id="user" class="container hidden"><h2 class="title">User Dashboard</h2><div class="tabs">
+<button onclick="userPanel('register')">Register</button><button onclick="userPanel('login')">Login</button><button onclick="userPanel('wallet')">Add Money – eWallet</button><button onclick="userPanel('ticket')">Buy Bus eTicket</button><button onclick="userPanel('newpass')">Apply New Bus Pass</button><button onclick="userPanel('renew')">Renewal Bus Pass</button><button onclick="userPanel('student')">Student & Route Pass</button><button onclick="userPanel('qr')">Get QR Code</button><button onclick="userPanel('time')">Expected Time</button>
+</div><div id="userContent" class="panel"><h2>Welcome User 👤</h2><p>Select a module above.</p></div></section>
+
+<section id="admin" class="container hidden"><h2 class="title">Admin Dashboard</h2><div class="tabs">
+<button onclick="adminPanel('login')">Login</button><button onclick="adminPanel('passes')">Manage Student & Route Pass</button><button onclick="adminPanel('conductor')">Manage Conductor Login</button><button onclick="adminPanel('approve')">Approve Bus Pass</button><button onclick="adminPanel('qr')">Generate QR Code</button><button onclick="adminPanel('bus')">Create Bus Details</button><button onclick="adminPanel('route')">Create Route Information</button>
+</div><div id="adminContent" class="panel"><h2>Admin Control Panel 🛠️</h2><p>Select an option above.</p></div></section>
+
+<section id="conductor" class="container hidden"><h2 class="title">Conductor Dashboard</h2><div class="tabs">
+<button onclick="condPanel('login')">Login</button><button onclick="condPanel('scan')">Scan QR</button><button onclick="condPanel('pass')">Verify Bus Pass ID</button><button onclick="condPanel('ticket')">Verify Bus Ticket</button><button onclick="condPanel('location')">Update Bus Location</button>
+</div><div id="condContent" class="panel"><h2>Welcome Conductor 🧑‍✈️</h2><p>Select a module above.</p></div></section>
+<footer>© 2026 SmartBus Pass Management System | Easy • Secure • Digital</footer>
+
+<script>
+function show(id){document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');scrollTo(0,0)}
+function userPanel(t){let c=document.getElementById('userContent'),d={
+register:`<h2>User Registration</h2><input placeholder="Candidate Name"><input placeholder="Address"><input type="date"><input placeholder="Mail ID"><input placeholder="School / Organization"><button class="btn" onclick="alert('Registration successful!')">Register</button>`,
+login:`<h2>User Login</h2><input placeholder="Email"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Login successful!')">Login</button>`,
+wallet:`<h2>eWallet</h2><p><b>Current Balance: ₹250</b></p><input type="number" placeholder="Enter amount"><button class="btn" onclick="alert('Money added to eWallet!')">Add Money</button>`,
+ticket:`<h2>Buy Bus eTicket</h2><input placeholder="From"><input placeholder="To"><select><option>Adult</option><option>Student</option></select><button class="btn" onclick="alert('eTicket booked successfully!')">Buy Ticket</button>`,
+newpass:`<h2>Apply New Bus Pass</h2><input placeholder="Candidate Name"><input placeholder="Address"><input type="date" placeholder="Date of Birth"><input placeholder="Mail ID"><input placeholder="School / Organization"><select><option>Student Pass</option><option>Route Pass</option></select><button class="btn" onclick="alert('Bus pass application submitted!')">Apply</button>`,
+renew:`<h2>Renewal Bus Pass</h2><input placeholder="Bus Pass ID"><select><option>1 Month - ₹500</option><option>2 Months - ₹1000</option><option>3 Months - ₹1500</option></select><button class="btn" onclick="alert('Bus pass renewed successfully!')">Renew</button>`,
+student:`<h2>Student & Route Pass</h2><table><tr><th>Pass Type</th><th>Validity</th><th>Amount</th></tr><tr><td>Government School Student</td><td>1 Month</td><td class="ok">FREE</td></tr><tr><td>Route Pass</td><td>1 Month</td><td>₹500</td></tr></table>`,
+qr:`<h2>Bus Pass QR Code</h2><p style="text-align:center">Pass ID: BP2026-1045</p><div class="qr"></div><p style="text-align:center">Show this QR code to the conductor.</p>`,
+time:`<h2>Expected Time to Reach</h2><input placeholder="From: Chennai Central"><input placeholder="To: Avadi"><button class="btn" onclick="alert('Expected travel time: 55 minutes')">Calculate Time</button>`
+};c.innerHTML=d[t]}
+function adminPanel(t){let c=document.getElementById('adminContent'),d={
+login:`<h2>Admin Login</h2><input placeholder="Admin Email"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Admin login successful!')">Login</button>`,
+passes:`<h2>Manage Student & Route Pass</h2><table><tr><th>Pass ID</th><th>User</th><th>Type</th><th>Validity</th></tr><tr><td>BP2026-1045</td><td>Arun</td><td>Student</td><td>30-09-2026</td></tr><tr><td>RP2026-2031</td><td>Priya</td><td>Route</td><td>30-09-2026</td></tr></table>`,
+conductor:`<h2>Manage Conductor Login</h2><table><tr><th>Name</th><th>ID</th><th>Status</th></tr><tr><td>Ramesh</td><td>CON-101</td><td class="ok">Active</td></tr><tr><td>Suresh</td><td>CON-102</td><td class="ok">Active</td></tr></table>`,
+approve:`<h2>Approve Bus Pass</h2><table><tr><th>Applicant</th><th>Pass Type</th><th>Status</th><th>Action</th></tr><tr><td>Arun Kumar</td><td>Student</td><td>Pending</td><td><button class="btn" onclick="alert('Bus pass approved!')">Approve</button></td></tr></table>`,
+qr:`<h2>Generate QR Code</h2><input placeholder="Enter Bus Pass ID"><button class="btn" onclick="alert('QR Code generated successfully!')">Generate</button><div class="qr"></div>`,
+bus:`<h2>Create Bus Details</h2><input placeholder="Bus Number"><input placeholder="Bus Type"><input placeholder="Conductor Name"><input placeholder="Route"><button class="btn" onclick="alert('Bus details created!')">Create Bus</button>`,
+route:`<h2>Create Route Information</h2><input placeholder="From"><input placeholder="To"><input placeholder="Time"><input placeholder="Route Stopping (comma separated)"><button class="btn" onclick="alert('Route information created!')">Create Route</button>`
+};c.innerHTML=d[t]}
+function condPanel(t){let c=document.getElementById('condContent'),d={
+login:`<h2>Conductor Login</h2><input placeholder="Conductor ID"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Conductor login successful!')">Login</button>`,
+scan:`<h2>Scan QR Code</h2><div class="qr"></div><p style="text-align:center">Camera / QR scanner ready</p><br><button class="btn" onclick="alert('QR scanned: BP2026-1045 - VALID')">Scan QR</button>`,
+pass:`<h2>Verify Bus Pass ID</h2><input placeholder="Enter Pass ID"><button class="btn" onclick="alert('Pass ID BP2026-1045 is VALID')">Verify</button>`,
+ticket:`<h2>Verify Bus Ticket</h2><input placeholder="Enter Ticket ID"><button class="btn" onclick="alert('Bus ticket is VALID')">Verify Ticket</button>`,
+location:`<h2>Update Bus Location</h2><input placeholder="Current Location"><select><option>Moving</option><option>Stopped</option></select><button class="btn" onclick="alert('Bus location updated successfully!')">Update Location</button><div class="map">📍 Bus 21A — Avadi Junction</div>`
+};c.innerHTML=d[t]}
+</script>
+</body>
+</html>
