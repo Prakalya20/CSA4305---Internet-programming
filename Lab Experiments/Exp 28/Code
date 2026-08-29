@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtistryHub — Emily Harris</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f3ee;color:#241f1d}
+a{text-decoration:none;color:inherit}
+.nav{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;background:#fbf8f4;border-bottom:1px solid #ded5cc;position:sticky;top:0}
+.logo{font:700 24px Georgia,serif}.logo span{color:#b65f45}
+.navlinks{display:flex;gap:28px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px}
+.navlinks a:first-child{color:#b65f45}
+.hero{min-height:590px;padding:62px 7%;display:grid;grid-template-columns:1fr 1.08fr;gap:55px;align-items:center;background:linear-gradient(135deg,#f5eee7,#e8d8cc)}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#a35b46;font-weight:700}
+.hero h1{font:700 68px/1.02 Georgia,serif;margin:18px 0}
+.hero h1 em{font-weight:400;color:#a35b46}
+.hero p{font-size:17px;line-height:1.7;max-width:500px;color:#655c57}
+.btn{display:inline-block;background:#2c2724;color:#fff;padding:15px 25px;margin-top:18px;font-size:12px;text-transform:uppercase;letter-spacing:1.4px}
+.hero-art{height:450px;border-radius:4px;overflow:hidden;background:linear-gradient(145deg,#d5c1b1,#9e634f 46%,#3f302c 47%,#7b9a91 75%,#d5a05e);box-shadow:18px 20px 0 rgba(71,55,47,.1)}
+.section{padding:85px 7%}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:35px}
+.section h2{font:600 42px Georgia,serif;margin:0}
+.muted{color:#776d66;font-size:14px}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid #e3dcd5}
+.art{height:290px}.a1{background:linear-gradient(135deg,#273e44,#c77c55 45%,#ead1ad 46%,#7f998d)}
+.a2{background:radial-gradient(circle at 70% 30%,#e4c07f 0 16%,transparent 17%),linear-gradient(125deg,#8e4c3e 0 38%,#d9a36d 39% 62%,#3d3532 63%)}
+.a3{background:linear-gradient(155deg,#e4d8ca 0 38%,#af6651 39% 66%,#343a3b 67%)}
+.cardbody{padding:18px 20px}.cardbody h3{font:600 21px Georgia,serif;margin:0 0 7px}.cardbody p{font-size:13px;color:#776d66;margin:0}
+.about{background:#2f2926;color:#f7f1eb;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
+.portrait{height:420px;background:linear-gradient(135deg,#c99c7d,#6f4a40 52%,#272323)}
+.about h2{font:600 45px Georgia,serif;margin:14px 0}.about p{line-height:1.8;color:#d6ccc5;max-width:600px}
+.facts{display:flex;gap:40px;margin-top:28px}.facts strong{display:block;font:600 25px Georgia,serif;color:#e1a17e}.facts span{font-size:11px;text-transform:uppercase;letter-spacing:1.3px;color:#a99e96}
+.media{background:#eee7df}.media-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+.media-item{height:220px;padding:25px;background:#5d4b43;color:#fff;display:flex;flex-direction:column;justify-content:end}.media-item.big{height:330px;background:linear-gradient(145deg,#8d5c4d,#273a3b)}
+.media-item:nth-child(2){background:#bd8268}.media-item:nth-child(3){background:#8c9181}
+.media-item h3{font:22px Georgia,serif;margin:0 0 6px}.media-item span{font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.footer{padding:35px 7%;display:flex;justify-content:space-between;font-size:12px;color:#766b64;background:#fbf8f4}
+@media(max-width:800px){.hero,.about{grid-template-columns:1fr}.gallery,.media-grid{grid-template-columns:1fr}.hero h1{font-size:48px}.navlinks{display:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="logo">Artistry<span>Hub</span></div>
+  <nav class="navlinks">
+    <a href="#home">Home</a><a href="#about">About</a><a href="#portfolio">Portfolio</a>
+    <a href="#media">Media</a><a href="#news">News</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="eyebrow">Est. 2026</div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div>
+    <div class="eyebrow">Contemporary artist · New York</div>
+    <h1>Art that feels<br>like a <em>memory.</em></h1>
+    <p>Welcome to the official digital gallery of Emily Harris — painter, storyteller and collector of quiet moments.</p>
+    <a class="btn" href="#portfolio">Explore the collection →</a>
+  </div>
+  <div class="hero-art" aria-label="Featured abstract artwork"></div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="section-head">
+    <div><div class="eyebrow">Selected works</div><h2>Featured Portfolio</h2></div>
+    <div class="muted">12 works · 2022—2026</div>
+  </div>
+  <div class="gallery">
+    <article class="card"><div class="art a1"></div><div class="cardbody"><h3>Quiet Horizon</h3><p>Oil on canvas · 2026 · 36 × 48 in</p></div></article>
+    <article class="card"><div class="art a2"></div><div class="cardbody"><h3>After the Rain</h3><p>Acrylic & gold leaf · 2025 · 30 × 40 in</p></div></article>
+    <article class="card"><div class="art a3"></div><div class="cardbody"><h3>Soft Collision</h3><p>Mixed media · 2024 · 24 × 36 in</p></div></article>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="portrait"></div>
+  <div>
+    <div class="eyebrow">About the artist</div><h2>Meet Emily Harris</h2>
+    <p>Emily Harris is a contemporary artist whose layered paintings explore memory, place and the emotional traces we leave behind.</p>
+    <p>Influenced by modern abstraction, vintage photography and changing city light, Emily builds each piece slowly — allowing texture, color and chance to shape the final story.</p>
+    <div class="facts"><div><strong>18+</strong><span>Exhibitions</span></div><div><strong>42</strong><span>Works created</span></div><div><strong>8</strong><span>Years creating</span></div></div>
+  </div>
+</section>
+
+<section class="section media" id="media">
+  <div class="section-head"><div><div class="eyebrow">Inside the studio</div><h2>Media & Stories</h2></div><div class="muted">Interviews · Studio visits · Events</div></div>
+  <div class="media-grid">
+    <div class="media-item big"><span>Video · 04:12</span><h3>A morning in Emily's studio</h3></div>
+    <div class="media-item"><span>Interview</span><h3>The art of remembering</h3></div>
+    <div class="media-item"><span>Exhibition</span><h3>Fragments / 2026</h3></div>
+  </div>
+</section>
+
+<section class="section" id="news">
+  <div class="eyebrow">Latest</div><h2>News & Updates</h2>
+  <p class="muted">Spring Open Studio — September 18 · New print collection arriving soon · Next solo exhibition: <i>Held Light</i>, October 7.</p>
+</section>
+</main>
+
+<footer class="footer" id="contact">
+  <div>© 2026 ArtistryHub · Emily Harris</div>
+  <div>Prints · Newsletter · Booking inquiries</div>
+</footer>
+</body>
+</html>
