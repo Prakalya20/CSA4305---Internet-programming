@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoadRescue - Vehicle Breakdown Assistance</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f7fb;color:#263238}
+header{background:linear-gradient(135deg,#d9480f,#f08c00);color:#fff;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:bold}.logo span{color:#ffe066}
+nav button{background:transparent;border:0;color:#fff;font-weight:bold;margin-left:18px;cursor:pointer}
+.hero{padding:55px 7%;background:linear-gradient(120deg,#fff4e6,#ffe8cc)}
+.hero h1{font-size:40px;margin-bottom:12px}.hero p{font-size:18px;max-width:760px;margin-bottom:24px}
+.btn{background:#d9480f;color:white;border:0;border-radius:7px;padding:11px 18px;cursor:pointer;font-weight:bold}
+.container{padding:35px 7%}.title{text-align:center;margin-bottom:25px;font-size:28px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card,.panel{background:#fff;padding:22px;border-radius:12px;box-shadow:0 3px 14px #00000012}
+.card .icon{font-size:34px}.card h3{margin:12px 0;color:#d9480f}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.tabs button{background:#e8590c;color:#fff;border:0;border-radius:7px;padding:10px 14px;cursor:pointer}
+input,select{width:100%;padding:11px;margin:7px 0 13px;border:1px solid #ced4da;border-radius:7px}
+table{width:100%;border-collapse:collapse;margin-top:15px}th,td{padding:12px;border-bottom:1px solid #dee2e6;text-align:left}th{background:#fff4e6}
+.badge{color:#2b8a3e;font-weight:bold}.map{height:180px;background:#d3f9d8;border-radius:10px;margin-top:15px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#2b8a3e}
+footer{text-align:center;padding:25px;background:#212529;color:white;margin-top:35px}
+.hidden{display:none}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}header{flex-direction:column;gap:15px}}
+@media(max-width:500px){.cards{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🚗 Road<span>Rescue</span></div>
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('user')">User</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="show('mechanic')">Mechanic</button>
+</nav>
+</header>
+
+<section id="home">
+<div class="hero">
+<h1>Vehicle Breakdown? We're Here to Help.</h1>
+<p>Find licensed mechanics near your location and get fast road assistance for cars and other vehicles.</p>
+<button class="btn" onclick="show('user')">Find a Mechanic</button>
+</div>
+<div class="container">
+<h2 class="title">Road Assistance Services</h2>
+<div class="cards">
+<div class="card"><div class="icon">🔍</div><h3>Search Mechanics</h3><p>Find licensed mechanics at nearby locations.</p></div>
+<div class="card"><div class="icon">📍</div><h3>Geo Location</h3><p>View mechanic locations using your current position.</p></div>
+<div class="card"><div class="icon">🛠️</div><h3>Quick Repair</h3><p>Contact an available mechanic for assistance.</p></div>
+<div class="card"><div class="icon">⭐</div><h3>Feedback</h3><p>Share your experience and service feedback.</p></div>
+</div>
+</div>
+</section>
+
+<section id="user" class="container hidden">
+<h2 class="title">User Module</h2>
+<div class="tabs">
+<button onclick="userPanel('register')">Register</button>
+<button onclick="userPanel('login')">Login</button>
+<button onclick="userPanel('search')">Search Mechanic Details</button>
+<button onclick="userPanel('location')">View Google Geo Location</button>
+<button onclick="userPanel('feedback')">Post Feedback</button>
+<button onclick="userPanel('profile')">My Profile</button>
+</div>
+<div id="userContent" class="panel"><h2>Welcome User 👤</h2><p>Select a module above.</p></div>
+</section>
+
+<section id="admin" class="container hidden">
+<h2 class="title">Admin Module</h2>
+<div class="tabs"><button onclick="adminPanel()">Provide Approval</button></div>
+<div id="adminContent" class="panel"><h2>Admin Dashboard 🛡️</h2><p>Approve licensed mechanics before listing them.</p></div>
+</section>
+
+<section id="mechanic" class="container hidden">
+<h2 class="title">Mechanic Module</h2>
+<div class="tabs">
+<button onclick="mechanicPanel('register')">Register</button>
+<button onclick="mechanicPanel('login')">Login</button>
+<button onclick="mechanicPanel('post')">Post Business</button>
+<button onclick="mechanicPanel('manage')">Manage Business</button>
+<button onclick="mechanicPanel('feedback')">View Feedback</button>
+</div>
+<div id="mechanicContent" class="panel"><h2>Welcome Mechanic 🔧</h2><p>Select a module above.</p></div>
+</section>
+
+<footer>© 2026 RoadRescue | Licensed Mechanics • Fast Road Assistance</footer>
+
+<script>
+function show(id){
+document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);
+}
+function userPanel(t){
+let c=document.getElementById('userContent');
+let d={
+register:`<h2>User Registration</h2><input placeholder="Full Name"><input placeholder="Email"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Registration successful!')">Register</button>`,
+login:`<h2>User Login</h2><input placeholder="Email"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Login successful!')">Login</button>`,
+search:`<h2>Search Mechanic Details</h2><input id="area" placeholder="Enter location e.g. Chennai"><button class="btn" onclick="alert('Showing licensed mechanics near your location')">Search</button><table><tr><th>Mechanic</th><th>Location</th><th>Service</th><th>Status</th></tr><tr><td>Arun Auto Care</td><td>Avadi</td><td>Car Repair</td><td class="badge">Licensed</td></tr><tr><td>Ravi Motors</td><td>Ambattur</td><td>Breakdown Assistance</td><td class="badge">Licensed</td></tr></table>`,
+location:`<h2>Google Geo Location</h2><p>Current location detected for finding nearby mechanics.</p><div class="map">📍 Your Location → 🛠️ Nearby Licensed Mechanics</div><br><button class="btn" onclick="navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>alert('Location: '+p.coords.latitude.toFixed(4)+', '+p.coords.longitude.toFixed(4)),()=>alert('Location permission required'))">Get My Location</button>`,
+feedback:`<h2>Post Feedback</h2><input placeholder="Mechanic Name"><select><option>5 - Excellent</option><option>4 - Good</option><option>3 - Average</option><option>2 - Poor</option></select><input placeholder="Write your feedback"><button class="btn" onclick="alert('Feedback submitted successfully!')">Submit Feedback</button>`,
+profile:`<h2>My Profile</h2><p><b>Name:</b> Karthik</p><p><b>Email:</b> karthik@example.com</p><p><b>Vehicle:</b> Hyundai i20</p><p><b>Assistance Requests:</b> 3</p>`
+};c.innerHTML=d[t];
+}
+function adminPanel(){
+document.getElementById('adminContent').innerHTML=`<h2>Mechanic Approval</h2><table><tr><th>Mechanic</th><th>Business</th><th>License</th><th>Status</th><th>Action</th></tr><tr><td>Arun Kumar</td><td>Arun Auto Care</td><td>TN-MEC-1024</td><td>Pending</td><td><button class="btn" onclick="alert('Mechanic approved!')">Approve</button></td></tr><tr><td>Ravi Motors</td><td>Ravi Motors</td><td>TN-MEC-1098</td><td class="badge">Approved</td><td>Verified</td></tr></table>`;
+}
+function mechanicPanel(t){
+let c=document.getElementById('mechanicContent');
+let d={
+register:`<h2>Mechanic Registration</h2><input placeholder="Mechanic Name"><input placeholder="Email"><input placeholder="License Number"><input placeholder="Phone Number"><button class="btn" onclick="alert('Mechanic registration submitted for approval!')">Register</button>`,
+login:`<h2>Mechanic Login</h2><input placeholder="Email"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Mechanic login successful!')">Login</button>`,
+post:`<h2>Post Business</h2><input placeholder="Business Name"><input placeholder="Location"><input placeholder="Services Offered"><input placeholder="Contact Number"><button class="btn" onclick="alert('Business posted successfully!')">Post Business</button>`,
+manage:`<h2>Manage Business</h2><table><tr><th>Business</th><th>Location</th><th>Service</th><th>Action</th></tr><tr><td>Arun Auto Care</td><td>Avadi</td><td>Car Repair</td><td><button class="btn">Edit</button></td></tr></table>`,
+feedback:`<h2>View Feedback</h2><table><tr><th>User</th><th>Rating</th><th>Feedback</th></tr><tr><td>Karthik</td><td>★★★★★</td><td>Quick and excellent service.</td></tr><tr><td>Priya</td><td>★★★★☆</td><td>Mechanic arrived on time.</td></tr></table>`
+};c.innerHTML=d[t];
+}
+</script>
+</body>
+</html>
