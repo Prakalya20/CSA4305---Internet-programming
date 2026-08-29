@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IJSSE | International Journal of Scientific and Social Excellence</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#243447;background:#f5f7fa}
+.top{background:#123d63;color:#fff;padding:9px 7%;font-size:12px;display:flex;justify-content:space-between}
+header{background:#fff;padding:20px 7%;display:flex;align-items:center;gap:18px;border-bottom:1px solid #e4e8ed}
+.logo{width:58px;height:58px;border-radius:50%;background:#1677b7;color:white;display:grid;place-items:center;font-weight:bold;font-size:18px}
+.brand h1{margin:0;color:#123d63;font:700 23px Georgia,serif}.brand p{margin:5px 0 0;color:#6b7785;font-size:12px}
+nav{background:#0d3150;padding:0 7%;display:flex;gap:0;flex-wrap:wrap}
+nav a{color:white;padding:15px 13px;text-decoration:none;font-size:12px;font-weight:bold;border-right:1px solid #234968}
+nav a:hover{background:#176d9f}
+.hero{background:linear-gradient(110deg,#123d63,#176d9f);color:#fff;padding:58px 7%;display:grid;grid-template-columns:1.5fr 1fr;gap:40px}
+.hero .tag{display:inline-block;background:#e9b949;color:#142c42;padding:7px 12px;border-radius:3px;font-size:11px;font-weight:bold}
+.hero h2{font:700 43px Georgia,serif;margin:18px 0 12px}.hero p{line-height:1.7;color:#e5edf5;max-width:650px}
+.btn{display:inline-block;background:#e9b949;color:#142c42;padding:13px 19px;margin-top:13px;text-decoration:none;font-size:12px;font-weight:bold;border-radius:3px}
+.issnbox{background:#fff;color:#243447;padding:25px;border-radius:5px;align-self:center;box-shadow:0 12px 30px #09283d55}
+.issnbox h3{margin:0 0 16px;color:#123d63}.issn{display:flex;justify-content:space-between;padding:13px 0;border-top:1px solid #e2e7eb;font-size:13px}
+.container{padding:45px 7%}.sectiontitle{font:700 29px Georgia,serif;color:#123d63;margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#fff;border:1px solid #dfe5ea;padding:23px;border-radius:4px}.card .icon{font-size:25px;color:#1677b7}.card h3{margin:13px 0 8px;color:#123d63}.card p{font-size:13px;line-height:1.6;color:#687582;margin:0}.card a{display:inline-block;margin-top:15px;color:#1677b7;font-size:12px;font-weight:bold}
+.content{display:grid;grid-template-columns:2fr 1fr;gap:28px}.news,.side{background:#fff;border:1px solid #dfe5ea;padding:25px}.article{padding:14px 0;border-bottom:1px solid #e5e9ed}.article:last-child{border:0}.article strong{color:#123d63}.article span{display:block;color:#7b8792;font-size:11px;margin-top:5px}
+footer{background:#102f49;color:#dbe7f0;padding:35px 7%;display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px;font-size:12px;line-height:1.7}footer h3{color:#fff;font:600 18px Georgia,serif}
+@media(max-width:800px){.hero,.content{grid-template-columns:1fr}.grid{grid-template-columns:1fr}nav a{padding:12px 8px;font-size:10px}.hero h2{font-size:34px}footer{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><span>Scopus Indexed Journal Publisher</span><span>Print ISSN: 2395-1443 &nbsp; | &nbsp; Online ISSN: 2395-1451</span></div>
+<header>
+<div class="logo">IJSSE</div>
+<div class="brand"><h1>International Journal of Scientific and Social Excellence</h1><p>Professional platform for scholarly research, peer review and academic publication</p></div>
+</header>
+<nav>
+<a href="#">HOME</a><a href="#">ABOUT JOURNAL</a><a href="#">PUBLICATION ETHICS</a><a href="#">EDITORIAL BOARD</a><a href="#">REVIEWERS</a><a href="#">AUTHOR</a><a href="#">ARTICLES</a><a href="#">CALL FOR PAPER</a><a href="#">CONTACT US</a>
+</nav>
+<section class="hero">
+<div><span class="tag">SCOPUS INDEXED</span><h2>Advancing Research.<br>Connecting Excellence.</h2><p>IJSSE provides a streamlined and transparent platform for researchers, reviewers and editors to publish high-quality scientific and social research.</p><a class="btn" href="#">SUBMIT MANUSCRIPT →</a></div>
+<div class="issnbox"><h3>Journal Information</h3><div class="issn"><span>Print ISSN</span><b>2395-1443</b></div><div class="issn"><span>Online ISSN</span><b>2395-1451</b></div><div class="issn"><span>Publication</span><b>Peer Reviewed</b></div><div class="issn"><span>Audience</span><b>Global Researchers</b></div></div>
+</section>
+<section class="container">
+<h2 class="sectiontitle">Explore IJSSE</h2>
+<div class="grid">
+<div class="card"><div class="icon">✎</div><h3>For Authors</h3><p>Register, login, submit manuscripts and access author instructions, guidelines, templates, copyright forms and publication charges.</p><a href="#">Author Registration →</a></div>
+<div class="card"><div class="icon">✓</div><h3>For Reviewers</h3><p>Access reviewer registration, secure login, assigned articles and resources supporting a consistent peer-review process.</p><a href="#">Reviewer Login →</a></div>
+<div class="card"><div class="icon">◆</div><h3>For Editors</h3><p>Manage submissions, coordinate peer reviews, view the editorial committee and oversee publication responsibilities.</p><a href="#">Editor Dashboard →</a></div>
+</div>
+</section>
+<section class="container" style="padding-top:5px">
+<div class="content">
+<div class="news"><h2 class="sectiontitle">Latest Articles & Updates</h2>
+<div class="article"><strong>Current Issue — Volume 12, Issue 2</strong><span>Explore newly published research and scholarly contributions.</span></div>
+<div class="article"><strong>Call for Papers — New Research Submissions</strong><span>Submit original scientific and social research for upcoming issues.</span></div>
+<div class="article"><strong>About to Print Articles</strong><span>Preview accepted articles scheduled for publication.</span></div></div>
+<div class="side"><h2 class="sectiontitle">Quick Links</h2><p>Current Issue</p><p>Archive</p><p>Most Viewed Articles</p><p>Most Cited Articles</p><p>Indexed List</p><p>Subscribe Newsletter</p><p>View Feedback</p></div>
+</div>
+</section>
+<footer>
+<div><h3>IJSSE</h3>International Journal of Scientific and Social Excellence<br>Supporting accessible, transparent and efficient academic publishing.</div>
+<div><h3>Author</h3>Author Instructions<br>Author Guidelines<br>Article Template<br>Copyright Form Template<br>Publication Charge</div>
+<div><h3>Contact</h3>Editorial Office<br>Email: editor@ijsse-journal.org<br>Submission & publication support<br><br>© 2026 IJSSE</div>
+</footer>
+</body>
+</html>
