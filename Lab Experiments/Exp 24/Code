@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanderlust Travels</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f7fb;color:#243447}
+header{background:linear-gradient(135deg,#0b7285,#1971c2);color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:28px;font-weight:bold}.logo span{color:#ffd43b}
+nav a{color:white;text-decoration:none;margin-left:25px;font-weight:bold;cursor:pointer}
+.hero{padding:48px 7%;background:linear-gradient(120deg,#e3fafc,#dbe4ff)}
+.hero h1{font-size:42px;margin-bottom:10px}.hero p{font-size:18px;margin-bottom:25px}
+button{border:0;background:#1971c2;color:white;padding:11px 18px;border-radius:7px;cursor:pointer;font-weight:bold}
+.container{padding:35px 7%}.title{text-align:center;margin-bottom:25px;font-size:28px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 3px 12px #0001}
+.card h3{margin:10px 0;color:#0b7285}.icon{font-size:35px}
+.panel{background:white;padding:24px;border-radius:12px;box-shadow:0 3px 12px #0001;margin-top:30px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.tabs button{background:#0b7285}
+table{width:100%;border-collapse:collapse;margin-top:15px}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}th{background:#e7f5ff}
+input{padding:11px;border:1px solid #ccd5df;border-radius:7px;width:100%;margin:7px 0 14px}
+footer{text-align:center;padding:25px;background:#1f2937;color:white;margin-top:40px}
+.hidden{display:none}.status{color:#2b8a3e;font-weight:bold}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}header{flex-direction:column;gap:15px}}
+@media(max-width:500px){.cards{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✈ Wanderlust <span>Travels</span></div>
+<nav><a onclick="show('home')">Home</a><a onclick="show('user')">User</a><a onclick="show('admin')">Admin</a></nav>
+</header>
+
+<section id="home">
+<div class="hero">
+<h1>Explore. Discover. Travel.</h1>
+<p>Your one-stop platform for tourism, food, accommodation and route information.</p>
+<button onclick="show('user')">Start Your Journey</button>
+</div>
+<div class="container">
+<h2 class="title">Travel Information</h2>
+<div class="cards">
+<div class="card"><div class="icon">🍴</div><h3>Food Details</h3><p>Discover popular local foods and restaurants.</p></div>
+<div class="card"><div class="icon">🏨</div><h3>Hostel Details</h3><p>Find comfortable and affordable accommodation.</p></div>
+<div class="card"><div class="icon">🗺️</div><h3>Route Details</h3><p>View convenient routes and travel information.</p></div>
+<div class="card"><div class="icon">🌴</div><h3>Tourism</h3><p>Explore exciting destinations and attractions.</p></div>
+</div>
+<div class="panel">
+<h2>Popular Destinations</h2>
+<table><tr><th>Destination</th><th>Best For</th><th>Package</th></tr>
+<tr><td>Goa</td><td>Beaches & Adventure</td><td>₹12,999</td></tr>
+<tr><td>Ooty</td><td>Hills & Nature</td><td>₹8,499</td></tr>
+<tr><td>Jaipur</td><td>Heritage & Culture</td><td>₹10,999</td></tr></table>
+</div>
+</div>
+</section>
+
+<section id="user" class="container hidden">
+<h2 class="title">User Dashboard</h2>
+<div class="tabs">
+<button onclick="userPanel('register')">Register</button><button onclick="userPanel('login')">Login</button>
+<button onclick="userPanel('food')">View Food Details</button><button onclick="userPanel('hostel')">View Hostel Details</button>
+<button onclick="userPanel('route')">View Route Details</button><button onclick="userPanel('booking')">My Book Accommodation</button>
+</div>
+<div id="userContent" class="panel"><h2>Welcome User 👤</h2><p>Select an option above.</p></div>
+</section>
+
+<section id="admin" class="container hidden">
+<h2 class="title">Admin Dashboard</h2>
+<div class="tabs">
+<button onclick="adminPanel('login')">Login</button><button onclick="adminPanel('tourism')">Post Tourism Details</button>
+<button onclick="adminPanel('food')">Manage Food Details</button><button onclick="adminPanel('hotel')">Manage Hotel Details</button>
+<button onclick="adminPanel('route')">Manage Route Details</button><button onclick="adminPanel('bookings')">View Booking Details</button>
+</div>
+<div id="adminContent" class="panel"><h2>Welcome Administrator 🛠️</h2><p>Select an option above.</p></div>
+</section>
+
+<footer>© 2026 Wanderlust Travels | Travel Made Simple</footer>
+
+<script>
+function show(id){
+ document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden'); window.scrollTo(0,0);
+}
+function userPanel(type){
+ let c=document.getElementById('userContent');
+ const data={
+ register:`<h2>User Registration</h2><input placeholder="Full Name"><input placeholder="Email"><input type="password" placeholder="Password"><button onclick="alert('Registration successful!')">Register</button>`,
+ login:`<h2>User Login</h2><input placeholder="Email"><input type="password" placeholder="Password"><button onclick="alert('Login successful!')">Login</button>`,
+ food:`<h2>Food Details</h2><table><tr><th>Place</th><th>Food</th><th>Price</th></tr><tr><td>Goa</td><td>Fish Thali</td><td>₹350</td></tr><tr><td>Ooty</td><td>Homemade Chocolate</td><td>₹180</td></tr></table>`,
+ hostel:`<h2>Hostel Details</h2><table><tr><th>Hostel</th><th>Location</th><th>Price/Night</th></tr><tr><td>Sea View Hostel</td><td>Goa</td><td>₹900</td></tr><tr><td>Hill Stay</td><td>Ooty</td><td>₹750</td></tr></table>`,
+ route:`<h2>Route Details</h2><table><tr><th>From</th><th>To</th><th>Transport</th></tr><tr><td>Chennai</td><td>Ooty</td><td>Bus</td></tr><tr><td>Chennai</td><td>Goa</td><td>Flight</td></tr></table>`,
+ booking:`<h2>My Book Accommodation</h2><input placeholder="Enter your name"><input placeholder="Select accommodation"><input type="date"><button onclick="alert('Accommodation booked successfully!')">Book Now</button>`
+ }; c.innerHTML=data[type];
+}
+function adminPanel(type){
+ let c=document.getElementById('adminContent');
+ const data={
+ login:`<h2>Admin Login</h2><input placeholder="Admin Email"><input type="password" placeholder="Password"><button onclick="alert('Admin login successful!')">Login</button>`,
+ tourism:`<h2>Post Tourism Details</h2><input placeholder="Destination"><input placeholder="Description"><input placeholder="Package Price"><button onclick="alert('Tourism details posted!')">Post Details</button>`,
+ food:`<h2>Manage Food Details</h2><table><tr><th>Food</th><th>Location</th><th>Action</th></tr><tr><td>Fish Thali</td><td>Goa</td><td><button>Edit</button></td></tr><tr><td>Chocolate</td><td>Ooty</td><td><button>Edit</button></td></tr></table>`,
+ hotel:`<h2>Manage Hotel Details</h2><table><tr><th>Hotel</th><th>Location</th><th>Status</th></tr><tr><td>Sea View Hostel</td><td>Goa</td><td class="status">Available</td></tr><tr><td>Hill Stay</td><td>Ooty</td><td class="status">Available</td></tr></table>`,
+ route:`<h2>Manage Route Details</h2><table><tr><th>From</th><th>To</th><th>Mode</th></tr><tr><td>Chennai</td><td>Ooty</td><td>Bus</td></tr><tr><td>Chennai</td><td>Goa</td><td>Flight</td></tr></table>`,
+ bookings:`<h2>Booking Details</h2><table><tr><th>User</th><th>Accommodation</th><th>Date</th><th>Status</th></tr><tr><td>Arun</td><td>Sea View Hostel</td><td>20-09-2026</td><td class="status">Confirmed</td></tr><tr><td>Priya</td><td>Hill Stay</td><td>25-09-2026</td><td class="status">Confirmed</td></tr></table>`
+ }; c.innerHTML=data[type];
+}
+</script>
+</body>
+</html>
